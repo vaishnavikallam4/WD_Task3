@@ -1,0 +1,728 @@
+const categories = [
+  {
+    id: "programming",
+    name: "Programming",
+    icon: "FaCode",
+    description: "Logic, syntax, and software engineering",
+    accent: "#22d3ee",
+  },
+  {
+    id: "ai",
+    name: "AI",
+    icon: "FaRobot",
+    description: "Machine learning, GPT, and neural networks",
+    accent: "#a78bfa",
+  },
+  {
+    id: "web",
+    name: "Web Development",
+    icon: "FaGlobe",
+    description: "Frontend architecture and modern UX",
+    accent: "#fb923c",
+  },
+  {
+    id: "science",
+    name: "Science",
+    icon: "FaFlask",
+    description: "Physics, chemistry, and the natural world",
+    accent: "#4ade80",
+  },
+  {
+    id: "cyber",
+    name: "Cyber Security",
+    icon: "FaShieldAlt",
+    description: "Threats, defenses, and secure systems",
+    accent: "#f472b6",
+  },
+  {
+    id: "history",
+    name: "History",
+    icon: "FaLandmark",
+    description: "World events, leaders, and revolutions",
+    accent: "#facc15",
+  },
+  {
+    id: "sports",
+    name: "Sports",
+    icon: "FaFootballBall",
+    description: "Athletes, records, and big games",
+    accent: "#38bdf8",
+  },
+  {
+    id: "movies",
+    name: "Movies",
+    icon: "FaFilm",
+    description: "Cinema classics and pop culture",
+    accent: "#fb7185",
+  },
+  {
+    id: "space",
+    name: "Space",
+    icon: "FaSatelliteDish",
+    description: "Planets, stars, and cosmic discovery",
+    accent: "#818cf8",
+  },
+  {
+    id: "general",
+    name: "General Knowledge",
+    icon: "FaBrain",
+    description: "Curiosity across people, places, and ideas",
+    accent: "#2dd4bf",
+  },
+];
+
+const questionBank = categories.flatMap((category, categoryIndex) =>
+  Array.from({ length: 10 }, (_, index) => {
+    const difficulty = ["easy", "medium", "hard"][index % 3];
+    const questionNumber = index + 1;
+
+    const prompts = {
+      programming: [
+        {
+          question: "Which JavaScript keyword declares a block-scoped variable?",
+          options: ["var", "let", "function", "class"],
+          answer: "let",
+          explanation: "let is scoped to the nearest block and is preferred for mutable values.",
+        },
+        {
+          question: "What does JSX compile to?",
+          options: ["HTML", "JavaScript objects", "CSS", "Markdown"],
+          answer: "JavaScript objects",
+          explanation: "React elements are represented as JavaScript objects during compilation.",
+        },
+        {
+          question: "Which tool bundles JavaScript for production?",
+          options: ["Vite", "Photoshop", "Figma", "Excel"],
+          answer: "Vite",
+          explanation: "Vite is a fast build tool and dev server for modern web apps.",
+        },
+        {
+          question: "What does API stand for?",
+          options: ["Application Programming Interface", "Automated Private Interface", "Async Programming Index", "Advanced Program Input"],
+          answer: "Application Programming Interface",
+          explanation: "APIs define how software components communicate.",
+        },
+        {
+          question: "Which data structure uses LIFO ordering?",
+          options: ["Queue", "Stack", "Tree", "Graph"],
+          answer: "Stack",
+          explanation: "A stack processes items in last-in-first-out order.",
+        },
+        {
+          question: "Which React hook manages state inside a component?",
+          options: ["useEffect", "useMemo", "useState", "useRef"],
+          answer: "useState",
+          explanation: "useState provides component state variables and setters.",
+        },
+        {
+          question: "Which symbol is used for strict equality comparison?",
+          options: ["=", "==", "===", "!=="],
+          answer: "===",
+          explanation: "=== checks both value and type without coercion.",
+        },
+        {
+          question: "What is the main purpose of CSS Flexbox?",
+          options: ["Data storage", "Layout alignment", "Server routing", "Animation rendering"],
+          answer: "Layout alignment",
+          explanation: "Flexbox is specialized for arranging items in a layout.",
+        },
+        {
+          question: "Which language is primarily used for styling web pages?",
+          options: ["Python", "Java", "CSS", "SQL"],
+          answer: "CSS",
+          explanation: "CSS controls presentation and styling on the web.",
+        },
+        {
+          question: "What does npm stand for?",
+          options: ["Node Package Manager", "New Project Module", "Network Programming Method", "Native Package Maker"],
+          answer: "Node Package Manager",
+          explanation: "npm is the default package manager for Node.js projects.",
+        },
+      ],
+      ai: [
+        {
+          question: "What does AI stand for?",
+          options: ["Artificial Intelligence", "Automated Input", "Advanced Integration", "Applied Internet"],
+          answer: "Artificial Intelligence",
+          explanation: "AI refers to systems that perform tasks requiring human-like intelligence.",
+        },
+        {
+          question: "Which field focuses on teaching machines from data?",
+          options: ["Machine Learning", "Quantum Computing", "Cloud Storage", "Web Design"],
+          answer: "Machine Learning",
+          explanation: "Machine learning trains models to identify patterns and make predictions.",
+        },
+        {
+          question: "What is a neural network inspired by?",
+          options: ["Human brain", "Solar system", "Database schema", "Binary tree"],
+          answer: "Human brain",
+          explanation: "Neural networks mimic the structure of biological neurons to process information.",
+        },
+        {
+          question: "What does NLP stand for?",
+          options: ["Natural Language Processing", "New Language Protocol", "Neural Logic Programming", "Network Layer Parser"],
+          answer: "Natural Language Processing",
+          explanation: "NLP enables computers to understand and generate human language.",
+        },
+        {
+          question: "Which model family powers many modern chat assistants?",
+          options: ["Transformer", "Bubble sort", "Hash table", "Compiler"],
+          answer: "Transformer",
+          explanation: "Transformer models are the foundation of many language models.",
+        },
+        {
+          question: "What is a common use of computer vision?",
+          options: ["Image recognition", "Battery charging", "Text formatting", "File compression"],
+          answer: "Image recognition",
+          explanation: "Computer vision helps systems interpret visual data from images or video.",
+        },
+        {
+          question: "What does GAN stand for?",
+          options: ["Generative Adversarial Network", "Global Access Network", "Graphical Analysis Node", "General Algorithmic Network"],
+          answer: "Generative Adversarial Network",
+          explanation: "GANs pit two neural networks against each other to generate realistic content.",
+        },
+        {
+          question: "Which metric often measures model accuracy?",
+          options: ["Precision", "Latency", "Bandwidth", "Resolution"],
+          answer: "Precision",
+          explanation: "Precision measures how many predicted positives were correct.",
+        },
+        {
+          question: "What is reinforcement learning based on?",
+          options: ["Rewards and penalties", "Static tables", "Color gradients", "Manual scripts"],
+          answer: "Rewards and penalties",
+          explanation: "Reinforcement learning learns through trial and feedback signals.",
+        },
+        {
+          question: "What is the goal of feature engineering?",
+          options: ["Improve model inputs", "Reduce memory", "Increase noise", "Disable training"],
+          answer: "Improve model inputs",
+          explanation: "Feature engineering creates useful input variables for learning systems.",
+        },
+      ],
+      web: [
+        {
+          question: "What does HTML stand for?",
+          options: ["HyperText Markup Language", "High Transfer Machine Language", "Hyperlink Transfer Module", "Home Tool Markup Link"],
+          answer: "HyperText Markup Language",
+          explanation: "HTML structures content on the web.",
+        },
+        {
+          question: "Which CSS property changes background color?",
+          options: ["background-color", "text-color", "font-size", "display"],
+          answer: "background-color",
+          explanation: "background-color sets the element background for visual styling.",
+        },
+        {
+          question: "What is React primarily used for?",
+          options: ["UI components", "Database queries", "Image processing", "Operating systems"],
+          answer: "UI components",
+          explanation: "React builds dynamic and reusable user interfaces.",
+        },
+        {
+          question: "Which protocol is used for secure web browsing?",
+          options: ["HTTP", "HTTPS", "FTP", "SMTP"],
+          answer: "HTTPS",
+          explanation: "HTTPS encrypts traffic for secure web communication.",
+        },
+        {
+          question: "What is responsive design?",
+          options: ["Adapting layouts to screen sizes", "Loading only images", "Compressing CSS", "Removing JavaScript"],
+          answer: "Adapting layouts to screen sizes",
+          explanation: "Responsive design ensures interfaces work across devices.",
+        },
+        {
+          question: "Which CSS layout system supports two-dimensional alignment?",
+          options: ["Flexbox", "Grid", "Table", "Canvas"],
+          answer: "Grid",
+          explanation: "CSS Grid handles rows and columns with strong layout control.",
+        },
+        {
+          question: "Which JavaScript method adds a new item to the end of an array?",
+          options: ["push", "pop", "shift", "slice"],
+          answer: "push",
+          explanation: "push appends an element to the end of an array.",
+        },
+        {
+          question: "What does ARIA improve in web applications?",
+          options: ["Accessibility", "Animation speed", "Caching", "Security"],
+          answer: "Accessibility",
+          explanation: "ARIA helps assistive technologies understand dynamic content.",
+        },
+        {
+          question: "What is a SPA?",
+          options: ["Single Page Application", "Secure Password Algorithm", "Server Process Agent", "Static Page Archive"],
+          answer: "Single Page Application",
+          explanation: "SPAs load a single document and update content dynamically.",
+        },
+        {
+          question: "Which browser engine powers Chrome?",
+          options: ["Blink", "Gecko", "WebKit", "Trident"],
+          answer: "Blink",
+          explanation: "Chrome uses the Blink engine for rendering and layout.",
+        },
+      ],
+      science: [
+        {
+          question: "What is the chemical symbol for water?",
+          options: ["O2", "H2O", "CO2", "NaCl"],
+          answer: "H2O",
+          explanation: "Water consists of two hydrogen atoms and one oxygen atom.",
+        },
+        {
+          question: "What planet is known as the Red Planet?",
+          options: ["Venus", "Mars", "Mercury", "Jupiter"],
+          answer: "Mars",
+          explanation: "Mars has a reddish appearance caused by iron oxide on its surface.",
+        },
+        {
+          question: "What force pulls objects toward Earth?",
+          options: ["Friction", "Gravity", "Magnetism", "Inertia"],
+          answer: "Gravity",
+          explanation: "Gravity attracts masses toward each other, including Earth and objects on it.",
+        },
+        {
+          question: "What is the smallest unit of life?",
+          options: ["Atom", "Cell", "Molecule", "Tissue"],
+          answer: "Cell",
+          explanation: "Cells are the basic structural and functional units of organisms.",
+        },
+        {
+          question: "Which gas do plants absorb from the atmosphere?",
+          options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+          answer: "Carbon dioxide",
+          explanation: "Plants use carbon dioxide during photosynthesis.",
+        },
+        {
+          question: "What is the SI unit of force?",
+          options: ["Joule", "Watt", "Newton", "Pascal"],
+          answer: "Newton",
+          explanation: "The newton is the SI unit for force.",
+        },
+        {
+          question: "Which part of the cell contains DNA?",
+          options: ["Ribosome", "Nucleus", "Cell wall", "Cytoplasm"],
+          answer: "Nucleus",
+          explanation: "The nucleus houses the genetic material in eukaryotic cells.",
+        },
+        {
+          question: "What is the speed of light in a vacuum?",
+          options: ["300,000 km/s", "150,000 km/s", "3,000 km/s", "30,000 km/s"],
+          answer: "300,000 km/s",
+          explanation: "Light travels at approximately 300,000 kilometers per second in vacuum.",
+        },
+        {
+          question: "Which scientist developed the theory of relativity?",
+          options: ["Isaac Newton", "Albert Einstein", "Nikola Tesla", "Marie Curie"],
+          answer: "Albert Einstein",
+          explanation: "Einstein formulated the theory of relativity.",
+        },
+        {
+          question: "What is the boiling point of water at sea level?",
+          options: ["90°C", "100°C", "110°C", "120°C"],
+          answer: "100°C",
+          explanation: "Water boils at 100°C under standard atmospheric pressure.",
+        },
+      ],
+      cyber: [
+        {
+          question: "What does VPN stand for?",
+          options: ["Virtual Private Network", "Very Private Network", "Virtual Public Node", "Verified Password Network"],
+          answer: "Virtual Private Network",
+          explanation: "A VPN creates an encrypted connection over a less secure network.",
+        },
+        {
+          question: "Which attack tricks users into revealing sensitive information?",
+          options: ["Phishing", "Brute force", "DDoS", "Spoofing"],
+          answer: "Phishing",
+          explanation: "Phishing uses deceptive messages to trick people into sharing secrets.",
+        },
+        {
+          question: "What is two-factor authentication?",
+          options: ["Two-step login verification", "Double encryption", "Shared password", "Router setup"],
+          answer: "Two-step login verification",
+          explanation: "2FA adds another verification step beyond the password.",
+        },
+        {
+          question: "Which malware encrypts files for ransom?",
+          options: ["Trojan", "Ransomware", "Spyware", "Worm"],
+          answer: "Ransomware",
+          explanation: "Ransomware locks or encrypts files and demands payment for access.",
+        },
+        {
+          question: "What does SSL protect?",
+          options: ["Data in transit", "Hard drives", "CPU cores", "Routers only"],
+          answer: "Data in transit",
+          explanation: "SSL/TLS encrypts data traveling between clients and servers.",
+        },
+        {
+          question: "Which password practice is strongest?",
+          options: ["Using a single reusable password", "Using a passphrase and manager", "Sharing with a coworker", "Using birth dates"],
+          answer: "Using a passphrase and manager",
+          explanation: "Long unique passphrases reduce the chance of compromise.",
+        },
+        {
+          question: "What does MFA stand for?",
+          options: ["Multi-Factor Authentication", "Manual File Access", "Machine Firmware Analysis", "Main Frame Access"],
+          answer: "Multi-Factor Authentication",
+          explanation: "MFA requires more than one proof of identity for access.",
+        },
+        {
+          question: "What is a firewall used for?",
+          options: ["Filtering network traffic", "Speeding up browsers", "Installing software", "Compressing files"],
+          answer: "Filtering network traffic",
+          explanation: "Firewalls inspect and control incoming and outgoing network traffic.",
+        },
+        {
+          question: "What is the purpose of patching?",
+          options: ["Installing security fixes", "Deleting files", "Changing fonts", "Adding bookmarks"],
+          answer: "Installing security fixes",
+          explanation: "Patching updates software to fix bugs and close vulnerabilities.",
+        },
+        {
+          question: "What is a common sign of a phishing email?",
+          options: ["Urgent request for credentials", "Friendly greeting", "Normal sender address", "Clear footer"],
+          answer: "Urgent request for credentials",
+          explanation: "Phishing often creates urgency to pressure the victim into acting quickly.",
+        },
+      ],
+      history: [
+        {
+          question: "Who was the first President of the United States?",
+          options: ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "John Adams"],
+          answer: "George Washington",
+          explanation: "George Washington served as the first U.S. president.",
+        },
+        {
+          question: "Which ancient civilization built Machu Picchu?",
+          options: ["Aztecs", "Maya", "Inca", "Romans"],
+          answer: "Inca",
+          explanation: "Machu Picchu was built by the Inca civilization.",
+        },
+        {
+          question: "What event started World War II in Europe?",
+          options: ["The sinking of the Titanic", "The invasion of Poland", "The fall of Rome", "The moon landing"],
+          answer: "The invasion of Poland",
+          explanation: "Germany invaded Poland in 1939, triggering World War II in Europe.",
+        },
+        {
+          question: "Who wrote the Communist Manifesto?",
+          options: ["Karl Marx", "Vladimir Lenin", "Mao Zedong", "Friedrich Engels"],
+          answer: "Karl Marx",
+          explanation: "Karl Marx and Friedrich Engels authored the manifesto.",
+        },
+        {
+          question: "Which empire was ruled by Julius Caesar?",
+          options: ["Mongol Empire", "Roman Empire", "Ottoman Empire", "Persian Empire"],
+          answer: "Roman Empire",
+          explanation: "Julius Caesar was a Roman statesman and general.",
+        },
+        {
+          question: "What year did the first moon landing occur?",
+          options: ["1965", "1969", "1971", "1973"],
+          answer: "1969",
+          explanation: "Apollo 11 landed humans on the moon in 1969.",
+        },
+        {
+          question: "Who discovered America in 1492?",
+          options: ["Christopher Columbus", "Marco Polo", "Vasco da Gama", "Ferdinand Magellan"],
+          answer: "Christopher Columbus",
+          explanation: "Columbus reached the Americas in 1492 under the Spanish crown.",
+        },
+        {
+          question: "Which war was fought between North and South in the United States?",
+          options: ["World War I", "The Civil War", "The Vietnam War", "The Korean War"],
+          answer: "The Civil War",
+          explanation: "The American Civil War was fought between the Union and Confederacy.",
+        },
+        {
+          question: "Who built the Great Wall of China?",
+          options: ["The Chinese dynasties", "The Romans", "The Vikings", "The Ottomans"],
+          answer: "The Chinese dynasties",
+          explanation: "The wall was built across several dynasties over centuries.",
+        },
+        {
+          question: "What was the main purpose of the Magna Carta?",
+          options: ["Limit royal power", "Create a navy", "Build a canal", "Start a trade route"],
+          answer: "Limit royal power",
+          explanation: "The Magna Carta limited the authority of the English monarchy.",
+        },
+      ],
+      sports: [
+        {
+          question: "How many players are on the field for one soccer team?",
+          options: ["9", "10", "11", "12"],
+          answer: "11",
+          explanation: "A soccer team has 11 players on the field at once.",
+        },
+        {
+          question: "What is the maximum score in a single frame of bowling?",
+          options: ["8", "10", "12", "15"],
+          answer: "10",
+          explanation: "A bowling frame can score up to 10 pins without bonus.",
+        },
+        {
+          question: "Which sport uses a shuttlecock?",
+          options: ["Tennis", "Badminton", "Golf", "Rugby"],
+          answer: "Badminton",
+          explanation: "Badminton uses a shuttlecock, also known as a birdie.",
+        },
+        {
+          question: "How many points is a touchdown worth in American football?",
+          options: ["3", "4", "6", "7"],
+          answer: "6",
+          explanation: "A touchdown is worth six points in American football.",
+        },
+        {
+          question: "Which country hosted the 2016 Summer Olympics?",
+          options: ["Japan", "Brazil", "China", "Spain"],
+          answer: "Brazil",
+          explanation: "Brazil hosted the 2016 Summer Olympics in Rio de Janeiro.",
+        },
+        {
+          question: "How many holes are on a standard golf course?",
+          options: ["18", "16", "20", "9"],
+          answer: "18",
+          explanation: "Standard golf courses feature 18 holes.",
+        },
+        {
+          question: "Which sport is known as the king of sports?",
+          options: ["Cricket", "Football", "Basketball", "Tennis"],
+          answer: "Football",
+          explanation: "Football is often called the king of sports due to its global popularity.",
+        },
+        {
+          question: "How many players are on a basketball team on the court?",
+          options: ["4", "5", "6", "7"],
+          answer: "5",
+          explanation: "Each basketball team plays with five players on the court.",
+        },
+        {
+          question: "Which athlete is known as the GOAT of swimming?",
+          options: ["Michael Phelps", "Usain Bolt", "Serena Williams", "Lionel Messi"],
+          answer: "Michael Phelps",
+          explanation: "Michael Phelps has the most Olympic medals of any athlete.",
+        },
+        {
+          question: "What is the term for a score of zero in tennis?",
+          options: ["Love", "Ace", "Break", "Deuce"],
+          answer: "Love",
+          explanation: "Love is the tennis term for zero.",
+        },
+      ],
+      movies: [
+        {
+          question: "Who directed Inception?",
+          options: ["Christopher Nolan", "Steven Spielberg", "Quentin Tarantino", "Ridley Scott"],
+          answer: "Christopher Nolan",
+          explanation: "Christopher Nolan directed the 2010 science-fiction thriller Inception.",
+        },
+        {
+          question: "Which movie features the quote 'May the Force be with you'?",
+          options: ["Star Wars", "The Matrix", "Alien", "Blade Runner"],
+          answer: "Star Wars",
+          explanation: "The phrase is iconic in the Star Wars franchise.",
+        },
+        {
+          question: "What is the name of the fictional African nation in Black Panther?",
+          options: ["Naboo", "Wakanda", "Genovia", "Zamunda"],
+          answer: "Wakanda",
+          explanation: "Wakanda is the fictional country at the center of Black Panther.",
+        },
+        {
+          question: "Who played Jack Dawson in Titanic?",
+          options: ["Brad Pitt", "Leonardo DiCaprio", "Tom Cruise", "Johnny Depp"],
+          answer: "Leonardo DiCaprio",
+          explanation: "Leonardo DiCaprio portrayed Jack Dawson in Titanic.",
+        },
+        {
+          question: "Which film is about a group of friends seeking a golden ticket?",
+          options: ["Charlie and the Chocolate Factory", "Frozen", "Shrek", "The Lion King"],
+          answer: "Charlie and the Chocolate Factory",
+          explanation: "The story centers on Charlie and a magical chocolate factory.",
+        },
+        {
+          question: "Who directed Interstellar?",
+          options: ["Denis Villeneuve", "Christopher Nolan", "James Cameron", "David Fincher"],
+          answer: "Christopher Nolan",
+          explanation: "Christopher Nolan also directed Interstellar.",
+        },
+        {
+          question: "What is the name of the hobbit in The Lord of the Rings?",
+          options: ["Frodo", "Aragorn", "Gandalf", "Legolas"],
+          answer: "Frodo",
+          explanation: "Frodo Baggins is the central hobbit in the trilogy.",
+        },
+        {
+          question: "Which movie features the character Tony Stark?",
+          options: ["Spider-Man", "Iron Man", "Thor", "Captain America"],
+          answer: "Iron Man",
+          explanation: "Tony Stark is the hero of Iron Man.",
+        },
+        {
+          question: "Who played Hermione Granger in the Harry Potter films?",
+          options: ["Emma Watson", "Keira Knightley", "Natalie Portman", "Lily Collins"],
+          answer: "Emma Watson",
+          explanation: "Emma Watson portrayed Hermione Granger.",
+        },
+        {
+          question: "What is the name of the fictional world in The Matrix?",
+          options: ["The Grid", "The Matrix", "The Realm", "The City"],
+          answer: "The Matrix",
+          explanation: "The Matrix is the simulated world the protagonists inhabit.",
+        },
+      ],
+      space: [
+        {
+          question: "What is the largest planet in our solar system?",
+          options: ["Mars", "Jupiter", "Saturn", "Neptune"],
+          answer: "Jupiter",
+          explanation: "Jupiter is the largest planet in our solar system.",
+        },
+        {
+          question: "What galaxy contains our solar system?",
+          options: ["Andromeda", "Milky Way", "Triangulum", "Sombrero"],
+          answer: "Milky Way",
+          explanation: "Our solar system is part of the Milky Way galaxy.",
+        },
+        {
+          question: "What is the name of Earth’s natural satellite?",
+          options: ["Comet", "Moon", "Asteroid", "Meteor"],
+          answer: "Moon",
+          explanation: "The Moon is Earth’s natural satellite.",
+        },
+        {
+          question: "Which planet is known for its prominent rings?",
+          options: ["Mars", "Venus", "Saturn", "Mercury"],
+          answer: "Saturn",
+          explanation: "Saturn is famous for its extensive ring system.",
+        },
+        {
+          question: "What is a light-year?",
+          options: ["Time unit", "Distance unit", "Speed unit", "Mass unit"],
+          answer: "Distance unit",
+          explanation: "A light-year measures the distance light travels in a year.",
+        },
+        {
+          question: "Which telescope was launched into space in 1990?",
+          options: ["Hubble", "Kepler", "James Webb", "Chandra"],
+          answer: "Hubble",
+          explanation: "The Hubble Space Telescope was launched in 1990.",
+        },
+        {
+          question: "What is the hottest planet in our solar system?",
+          options: ["Mercury", "Mars", "Venus", "Jupiter"],
+          answer: "Venus",
+          explanation: "Venus has a thick greenhouse atmosphere that makes it hotter than Mercury.",
+        },
+        {
+          question: "What is the name of the first human to walk on the moon?",
+          options: ["Buzz Aldrin", "Neil Armstrong", "Yuri Gagarin", "John Glenn"],
+          answer: "Neil Armstrong",
+          explanation: "Neil Armstrong was the first person to walk on the moon.",
+        },
+        {
+          question: "What do astronomers call a very large collection of stars?",
+          options: ["Nebula", "Galaxy", "Planet", "Comet"],
+          answer: "Galaxy",
+          explanation: "A galaxy is a vast system of stars and celestial bodies.",
+        },
+        {
+          question: "What is the study of the universe called?",
+          options: ["Geology", "Astronomy", "Biology", "Chemistry"],
+          answer: "Astronomy",
+          explanation: "Astronomy is the scientific study of celestial objects and the universe.",
+        },
+      ],
+      general: [
+        {
+          question: "What is the capital city of France?",
+          options: ["Berlin", "Madrid", "Paris", "Rome"],
+          answer: "Paris",
+          explanation: "Paris is the capital and largest city of France.",
+        },
+        {
+          question: "Which animal is the largest on Earth?",
+          options: ["Elephant", "Blue whale", "Giraffe", "Hippopotamus"],
+          answer: "Blue whale",
+          explanation: "The blue whale is the largest known animal.",
+        },
+        {
+          question: "What is the currency of Japan?",
+          options: ["Yuan", "Won", "Yen", "Rupee"],
+          answer: "Yen",
+          explanation: "The yen is the official currency of Japan.",
+        },
+        {
+          question: "How many continents are there?",
+          options: ["5", "6", "7", "8"],
+          answer: "7",
+          explanation: "There are seven commonly recognized continents.",
+        },
+        {
+          question: "Which ocean is the largest?",
+          options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+          answer: "Pacific",
+          explanation: "The Pacific Ocean is the largest and deepest ocean.",
+        },
+        {
+          question: "What does 'www' stand for?",
+          options: ["World Wide Web", "Web Wide World", "World With Web", "Web World Wide"],
+          answer: "World Wide Web",
+          explanation: "WWW refers to the system of interlinked pages on the internet.",
+        },
+        {
+          question: "What is the longest river in the world?",
+          options: ["Amazon", "Nile", "Yangtze", "Mississippi"],
+          answer: "Nile",
+          explanation: "The Nile is commonly cited as the longest river in the world.",
+        },
+        {
+          question: "Which planet has the most moons?",
+          options: ["Mars", "Saturn", "Neptune", "Mercury"],
+          answer: "Saturn",
+          explanation: "Saturn has the highest known number of moons in the solar system.",
+        },
+        {
+          question: "Who wrote Hamlet?",
+          options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "George Orwell"],
+          answer: "William Shakespeare",
+          explanation: "Hamlet was written by William Shakespeare.",
+        },
+        {
+          question: "What is the freezing point of water?",
+          options: ["0°C", "32°C", "100°C", "212°C"],
+          answer: "0°C",
+          explanation: "Water freezes at 0°C under normal conditions.",
+        },
+      ],
+    };
+
+    const pool = prompts[category.id] ?? prompts.general;
+    const item = pool[questionNumber - 1];
+
+    return {
+      id: `${category.id}-${questionNumber}`,
+      category: category.id,
+      categoryName: category.name,
+      difficulty,
+      question: item.question,
+      options: item.options,
+      answer: item.answer,
+      explanation: item.explanation,
+      accent: category.accent,
+      index: categoryIndex * 10 + questionNumber,
+    };
+  })
+);
+
+const dailyChallenge = {
+  title: "Daily Challenge",
+  categoryId: "ai",
+  description: "Unlock a bonus streak reward by mastering today’s AI sprint.",
+  reward: 120,
+};
+
+export { categories, questionBank, dailyChallenge };
+export default questionBank;
